@@ -13,6 +13,8 @@ export default class Tab2 extends Component{
     constructor(props)
     {
         super(props);
+
+        this.searchComponent = new SearchHeader();
     }
 
     //
@@ -38,14 +40,17 @@ export default class Tab2 extends Component{
     render(){
         return(
             <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-                <View style={styles.line} />
-                <View style={styles.line} />
+                <SearchHeader />
                 <Seprator />
             </ScrollView>
         );
     }
 }
 
+
+//
+// styles applied to main scrollView as main container!
+//
 const styles = StyleSheet.create({
         container : {
             backgroundColor : '#fafafa',
@@ -55,12 +60,48 @@ const styles = StyleSheet.create({
             flexDirection : 'column',
             justifyContent : 'flex-start',
             alignItems : 'stretch',
-        },
-        box : {
-            backgroundColor : 'blue',
-            // width : 20,
-            height : 30,
-            margin : 5,
         }
 }
 );
+
+
+//
+// components of search tab!
+//
+
+export class SearchHeader extends Component{
+    constructor(props){
+        super(props);
+
+        this.style = StyleSheet.create({
+            container : {
+                height: 50,
+                backgroundColor : 'blue',
+                flex : 1,
+                flexDirection: 'row',
+                justifyContent: 'flex-start',
+                alignItems:'center',
+            },
+            searchImage : {
+
+            },
+            text : {
+
+            }
+        });
+
+    }
+    render(){
+        return(
+            <View style={this.style.container}>
+                <image
+                source = {{uri:'./../Images/search.png'}}
+                style={this.style.searchImage}
+                />
+
+                <Text>test</Text>
+
+            </View>
+        );
+    }
+}
