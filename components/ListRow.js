@@ -12,7 +12,7 @@ export default class ListRow extends Component {
         return(
             <TouchableNativeFeedback
                 background={TouchableNativeFeedback.SelectableBackground()}>
-                <View style = {styles.box}>
+                <View style = {styles.line}>
                     <Text style={styles.text}>{this.props.text}</Text>
                 </View>
             </TouchableNativeFeedback>

@@ -37,12 +37,10 @@ export default class Tab2 extends Component{
     //
     render(){
         return(
-            <ScrollView style={styles.container }>
-                <View style={styles.contentContainer} >
-                    <View style={styles.box} />
-                    <View style={styles.box} />
-                    <Seprator />
-                </View>
+            <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+                <View style={styles.line} />
+                <View style={styles.line} />
+                <Seprator />
             </ScrollView>
         );
     }
@@ -56,11 +54,11 @@ const styles = StyleSheet.create({
         contentContainer : {
             flexDirection : 'column',
             justifyContent : 'flex-start',
-            alignItems : 'flex-end',
+            alignItems : 'stretch',
         },
         box : {
             backgroundColor : 'blue',
-            width : 20,
+            // width : 20,
             height : 30,
             margin : 5,
         }
