@@ -41,11 +41,15 @@ export default class Tab2 extends Component{
     //
     render(){
         return(
-            <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+            <ScrollView style={common_styles.container} contentContainerStyle={common_styles.contentContainer}>
                 <SearchHeader />
                 <Seprator />
                 <CitySearch />
                 <Seprator />
+                <PriceRange />
+                <Seprator />
+                {/*<GuestCount />*/}
+                <Seprator/>
             </ScrollView>
         );
     }
@@ -55,7 +59,7 @@ export default class Tab2 extends Component{
 //
 // styles applied to main scrollView as main container!
 //
-const styles = StyleSheet.create({
+const common_styles = StyleSheet.create({
         container : {
             backgroundColor : '#fafafa',
             flex : 1,
@@ -64,8 +68,18 @@ const styles = StyleSheet.create({
             flexDirection : 'column',
             justifyContent : 'flex-start',
             alignItems : 'stretch',
+        },
+
+        header_text : {
+            fontSize: 21,
+            fontFamily: "IRANYekanMobileBold",
+            marginRight: 30,
+            marginBottom : 5,
+            marginTop: 10,
+            color : '#454353',
         }
-}
+
+    }
 );
 
 
@@ -120,6 +134,9 @@ class SearchHeader extends React.Component{
     }
 }
 
+//
+//
+//
 class CitySearch extends Component{
 
     constructor(props){
@@ -145,21 +162,13 @@ class CitySearch extends Component{
                 padding : 5,
                 backgroundColor : 'white'
             },
-            text : {
-                fontSize: 23,
-                fontFamily: "IRANYekanMobileBold",
-                marginRight: 30,
-                marginBottom : 5,
-                marginTop: 10,
-                color : '#454353',
-            }
         });
     }
 
     render(){
         return(
             <View>
-                <Text style={this.style.text}>
+                <Text style={common_styles.header_text}>
                     شهر
                 </Text>
                 <View
@@ -171,6 +180,93 @@ class CitySearch extends Component{
                         onValueChange={(itemValue, itemIndex) => this.setState({language: itemValue})}>
                         <Picker.Item label="انتخاب کنید" value="select" style={this.style.picker_text}/>
                     </Picker>
+                </View>
+            </View>
+        )
+    }
+
+}
+
+//
+//
+//
+class PriceRange extends Component{
+
+    constructor(props){
+        super(props);
+
+        this.style = StyleSheet.create({
+            slider_container : {
+                height : 40,
+                marginBottom : 20,
+                marginTop : 10,
+            },
+        });
+    }
+
+    render(){
+        return(
+            <View>
+                <Text style={common_styles.header_text}>
+                    بازه قیمت
+                </Text>
+                <View
+                    style = {this.style.picker_container}
+                >
+                </View>
+            </View>
+        )
+    }
+
+}
+
+//
+//
+//
+class GuestCount extends Component{
+
+    constructor(props){
+        super(props);
+
+        this.state = {
+            guest_count : 1
+        };
+
+        this.style = StyleSheet.create({
+            slider_container : {
+                height : 40,
+                marginBottom : 20,
+                marginTop : 10,
+            },
+        });
+        this.onMinusPlusPressed = this.onMinusPlusPressed.bind(this);
+    }
+
+    onMinusPlusPressed (is_plus){
+        this.setState({
+            guest_count : is_plus ? this.state.guest_count + 1 : this.state.guest_count - 1
+        })
+    }
+
+    render(){
+        return(
+            <View>
+                <Text style={common_styles.header_text}>
+                    چند نفرید؟
+                </Text>
+                <View
+                    style = {this.style.picker_container}
+                >
+                    <Text>
+                        حداکثر تعداد پذیرش
+                    </Text>
+                    <View>
+                        <Text onPress={this.onMinusPlusPressed(true)}>+</Text>
+                        <Text>
+                            {this.state.guest_count}
+                        </Text>
+                        <Text onPress={this.onMinusPlusPressed(false)}>-</Text>
+                    </View>
                 </View>
             </View>
         )
