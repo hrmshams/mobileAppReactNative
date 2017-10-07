@@ -37,7 +37,7 @@ export class Seprator extends React.Component {
             },
             line : {
                 backgroundColor : backgroundColor,
-                height : 2,
+                height : 1,
                 marginLeft : row_margin,
                 marginRight : row_margin,
                 marginTop : col_margin,

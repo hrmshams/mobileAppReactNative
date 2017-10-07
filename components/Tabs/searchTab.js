@@ -4,8 +4,9 @@ import {
     Text,
     ScrollView,
     StyleSheet,
-    Image
-
+    Image,
+    TextInput,
+    Picker,
 } from 'react-native';
 
 import {Seprator} from './../CommonComponents';
@@ -42,6 +43,8 @@ export default class Tab2 extends Component{
         return(
             <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
                 <SearchHeader />
+                <Seprator />
+                <CitySearch />
                 <Seprator />
             </ScrollView>
         );
@@ -117,3 +120,60 @@ class SearchHeader extends React.Component{
     }
 }
 
+class CitySearch extends Component{
+
+    constructor(props){
+        super(props);
+
+        this.style = StyleSheet.create({
+            picker : {
+                color : '#b2bdc2',
+                height : 30,
+            },
+            picker_text : {
+                fontFamily: "IRANYekanMobileBold",
+            },
+            picker_container : {
+                height : 40,
+                borderWidth : 1,
+                borderRadius : 5,
+                borderColor : '#a5a9b5',
+                marginLeft : 30,
+                marginRight : 30,
+                marginBottom : 20,
+                marginTop : 10,
+                padding : 5,
+                backgroundColor : 'white'
+            },
+            text : {
+                fontSize: 23,
+                fontFamily: "IRANYekanMobileBold",
+                marginRight: 30,
+                marginBottom : 5,
+                marginTop: 10,
+                color : '#454353',
+            }
+        });
+    }
+
+    render(){
+        return(
+            <View>
+                <Text style={this.style.text}>
+                    شهر
+                </Text>
+                <View
+                    style = {this.style.picker_container}
+                >
+                    <Picker
+                        style={this.style.picker}
+                        selectedValue={"Java"}
+                        onValueChange={(itemValue, itemIndex) => this.setState({language: itemValue})}>
+                        <Picker.Item label="انتخاب کنید" value="select" style={this.style.picker_text}/>
+                    </Picker>
+                </View>
+            </View>
+        )
+    }
+
+}
