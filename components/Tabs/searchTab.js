@@ -48,7 +48,7 @@ export default class Tab2 extends Component{
                 <Seprator />
                 <PriceRange />
                 <Seprator />
-                {/*<GuestCount />*/}
+                <GuestCount />
                 <Seprator/>
             </ScrollView>
         );
@@ -197,9 +197,9 @@ class PriceRange extends Component{
 
         this.style = StyleSheet.create({
             slider_container : {
-                height : 40,
-                marginBottom : 20,
-                marginTop : 10,
+                height : 20,
+                // marginBottom : 20,
+                // marginTop : 10,
             },
         });
     }
@@ -211,7 +211,7 @@ class PriceRange extends Component{
                     بازه قیمت
                 </Text>
                 <View
-                    style = {this.style.picker_container}
+                    style = {this.style.slider_container}
                 >
                 </View>
             </View>
@@ -238,11 +238,38 @@ class GuestCount extends Component{
                 marginBottom : 20,
                 marginTop : 10,
             },
+            text : {
+                fontFamily: "IRANYekanMobileBold",
+                fontSize : 19,
+                marginRight : 30,
+            },
+            sub_contianer:{
+                flex : 1,
+                flexDirection : 'row',
+                justifyContent : 'flex-end',
+                marginBottom : 15,
+            },
+            minus_plus_container : {
+                flex : 1,
+                flexDirection : 'row',
+                justifyContent : 'flex-start',
+                marginLeft : 25,
+                // backgroundColor : 'red',
+            },
+            minus_plus : {
+                fontSize : 25,
+                marginLeft : 9,
+                marginRight : 9,
+            }
+
         });
         this.onMinusPlusPressed = this.onMinusPlusPressed.bind(this);
     }
 
     onMinusPlusPressed (is_plus){
+        if (this.state.guest_count === 0 && is_plus === false) {return}
+        else if (this.state.guest_count === 10 && is_plus === true) {return}
+
         this.setState({
             guest_count : is_plus ? this.state.guest_count + 1 : this.state.guest_count - 1
         })
@@ -254,19 +281,17 @@ class GuestCount extends Component{
                 <Text style={common_styles.header_text}>
                     چند نفرید؟
                 </Text>
-                <View
-                    style = {this.style.picker_container}
-                >
-                    <Text>
-                        حداکثر تعداد پذیرش
-                    </Text>
-                    <View>
-                        <Text onPress={this.onMinusPlusPressed(true)}>+</Text>
-                        <Text>
+                <View style={this.style.sub_contianer}>
+                    <View style={this.style.minus_plus_container}>
+                        <Text onPress={() => this.onMinusPlusPressed(false)} style={this.style.minus_plus}>-</Text>
+                        <Text style={this.style.minus_plus}>
                             {this.state.guest_count}
                         </Text>
-                        <Text onPress={this.onMinusPlusPressed(false)}>-</Text>
+                        <Text onPress={() => this.onMinusPlusPressed(true)} style={this.style.minus_plus}>+</Text>
                     </View>
+                    <Text style={this.style.text}>
+                        حداکثر تعداد پذیرش
+                    </Text>
                 </View>
             </View>
         )
