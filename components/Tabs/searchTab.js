@@ -7,6 +7,7 @@ import {
     Image,
     TextInput,
     Picker,
+    TouchableNativeFeedback
 } from 'react-native';
 
 import {Seprator} from './../CommonComponents';
@@ -71,11 +72,11 @@ const common_styles = StyleSheet.create({
         },
 
         header_text : {
-            fontSize: 21,
+            fontSize: 20,
             fontFamily: "IRANYekanMobileBold",
-            marginRight: 30,
+            marginRight: 25,
             marginBottom : 5,
-            marginTop: 10,
+            marginTop: 3,
             color : '#454353',
         }
 
@@ -105,13 +106,13 @@ class SearchHeader extends React.Component{
             searchImage : {
                 width : 64,
                 height : 64,
-                margin : 30,
-                marginBottom : 20,
-                marginLeft :20,
+                margin : 20,
+                marginBottom : 10,
+                marginLeft :15,
             },
             text : {
                 fontFamily: "IRANYekanMobileBold",
-                fontSize : 19,
+                fontSize : 18,
                 color : '#454353',
             }
         });
@@ -239,8 +240,8 @@ class GuestCount extends Component{
                 marginTop : 10,
             },
             text : {
-                fontFamily: "IRANYekanMobileBold",
-                fontSize : 19,
+                fontFamily: "IRANYekanMobileRegular",
+                fontSize : 18,
                 marginRight : 30,
             },
             sub_contianer:{
@@ -257,10 +258,19 @@ class GuestCount extends Component{
                 // backgroundColor : 'red',
             },
             minus_plus : {
+                marginLeft : 3,
+                marginRight : 3,
+                width : 30,
+                height : 30,
+                // backgroundColor : 'blue',
+                flexDirection : 'row',
+                justifyContent : 'center',
+                alignItems : 'center',
+                borderRadius: 15,
+            },
+            minus_plus_text : {
                 fontSize : 25,
-                marginLeft : 9,
-                marginRight : 9,
-            }
+            },
 
         });
         this.onMinusPlusPressed = this.onMinusPlusPressed.bind(this);
@@ -283,11 +293,40 @@ class GuestCount extends Component{
                 </Text>
                 <View style={this.style.sub_contianer}>
                     <View style={this.style.minus_plus_container}>
-                        <Text onPress={() => this.onMinusPlusPressed(false)} style={this.style.minus_plus}>-</Text>
-                        <Text style={this.style.minus_plus}>
-                            {this.state.guest_count}
-                        </Text>
-                        <Text onPress={() => this.onMinusPlusPressed(true)} style={this.style.minus_plus}>+</Text>
+
+                        <TouchableNativeFeedback
+                            onPress={() => this.onMinusPlusPressed(false)}
+                            background={TouchableNativeFeedback.SelectableBackground()}
+                        >
+                            <View
+                                style={this.style.minus_plus}
+                            >
+                                <Text
+                                    style = {this.style.minus_plus_text}
+                                >-</Text>
+                            </View>
+                        </TouchableNativeFeedback>
+
+                        <View style={[this.style.minus_plus , {width : 30} ]}>
+                            <Text style={this.style.minus_plus_text} >
+                                {this.state.guest_count}
+                            </Text>
+                        </View>
+
+                        <TouchableNativeFeedback
+                            onPress={() => this.onMinusPlusPressed(true)}
+                            background={TouchableNativeFeedback.SelectableBackground()}
+                            style={this.style.minus_plus}
+                        >
+                            <View
+                                style={this.style.minus_plus}
+                            >
+                                <Text
+                                    style = {this.style.minus_plus_text}
+                                >+</Text>
+                            </View>
+                        </TouchableNativeFeedback>
+
                     </View>
                     <Text style={this.style.text}>
                         حداکثر تعداد پذیرش
