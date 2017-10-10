@@ -197,19 +197,45 @@ class PriceRange extends Component{
     constructor(props){
         super(props);
 
+        this.state = {
+            slider_values : [100,150]
+        };
+
         this.style = StyleSheet.create({
             slider_container : {
-                height : 60,
+                height : 30,
                 flex : 1,
                 flexDirection : 'column',
                 justifyContent : 'center',
                 alignItems : 'center',
-                padding : 10,
+                padding : 1,
                 // backgroundColor : 'gray',
                 // marginBottom : 20,
                 // marginTop : 10,111
             },
+            text_container : {
+                // backgroundColor : 'blue',
+                flex : 1,
+                flexDirection : 'row',
+                justifyContent : 'center',
+                alignItems : 'center',
+                marginBottom : 10,
+            },
+            text : {
+                fontFamily: "IRANYekanMobileRegular",
+                fontSize : 18,
+            }
         });
+
+        this.sliderOneValuesChangeStart = this.sliderOneValuesChangeStart.bind(this);
+    }
+
+    sliderOneValuesChangeStart(values){
+        this.setState(
+            {
+                slider_values : [values[0] , values[1]]
+            }
+        );
     }
 
     render(){
@@ -223,10 +249,20 @@ class PriceRange extends Component{
                 >
                     <View style={{height : 20}}>
                         <MultiSlider
-                            values={[3 , 4]}
+                            min = {50}
+                            max = {500}
+                            step = {10}
+                            values={this.state.slider_values}
                             sliderLength={300}
+                            onValuesChange={(values) => this.sliderOneValuesChangeStart(values)}
                         />
                     </View>
+                </View>
+
+                <View style={this.style.text_container}>
+                    <Text style={this.style.text}>
+                        شروع از {this.state.slider_values[0]} هزار تومان تا {this.state.slider_values[1]} هزار تومان
+                    </Text>
                 </View>
             </View>
         )
