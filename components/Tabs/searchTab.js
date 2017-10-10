@@ -7,10 +7,11 @@ import {
     Image,
     TextInput,
     Picker,
-    TouchableNativeFeedback
+    TouchableNativeFeedback,
 } from 'react-native';
 
 import {Seprator} from './../CommonComponents';
+import MultiSlider from '@ptomasroos/react-native-multi-slider';
 
 export default class Tab2 extends Component{
     constructor(props)
@@ -198,9 +199,15 @@ class PriceRange extends Component{
 
         this.style = StyleSheet.create({
             slider_container : {
-                height : 20,
+                height : 60,
+                flex : 1,
+                flexDirection : 'column',
+                justifyContent : 'center',
+                alignItems : 'center',
+                padding : 10,
+                // backgroundColor : 'gray',
                 // marginBottom : 20,
-                // marginTop : 10,
+                // marginTop : 10,111
             },
         });
     }
@@ -214,6 +221,12 @@ class PriceRange extends Component{
                 <View
                     style = {this.style.slider_container}
                 >
+                    <View style={{height : 20}}>
+                        <MultiSlider
+                            values={[3 , 4]}
+                            sliderLength={300}
+                        />
+                    </View>
                 </View>
             </View>
         )
@@ -234,11 +247,6 @@ class GuestCount extends Component{
         };
 
         this.style = StyleSheet.create({
-            slider_container : {
-                height : 40,
-                marginBottom : 20,
-                marginTop : 10,
-            },
             text : {
                 fontFamily: "IRANYekanMobileRegular",
                 fontSize : 18,
