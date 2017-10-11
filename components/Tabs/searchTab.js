@@ -321,9 +321,35 @@ class GuestCount extends Component{
     constructor(props){
         super(props);
 
-        this.state = {
-            guest_count : 1
-        };
+    }
+
+    render(){
+        return(
+            <View>
+                <Text style={common_styles.header_text}>
+                    چند نفرید؟
+                </Text>
+                <SubjectCounter
+                    text="حداکثر تعداد پذیرش"
+                    count_min={0}
+                    count_max={10}
+                />
+            </View>
+        )
+    }
+
+}
+
+
+//
+// this is a component that used for in some section!
+// show the count of object that user must determine that!
+//
+
+class SubjectCounter extends Component{
+
+    constructor(props){
+        super(props);
 
         this.style = StyleSheet.create({
             text : {
@@ -331,7 +357,7 @@ class GuestCount extends Component{
                 fontSize : 18,
                 marginRight : 30,
             },
-            sub_contianer:{
+            sub_container:{
                 flex : 1,
                 flexDirection : 'row',
                 justifyContent : 'flex-end',
@@ -342,7 +368,6 @@ class GuestCount extends Component{
                 flexDirection : 'row',
                 justifyContent : 'flex-start',
                 marginLeft : 25,
-                // backgroundColor : 'red',
             },
             minus_plus : {
                 marginLeft : 3,
@@ -360,67 +385,67 @@ class GuestCount extends Component{
             },
 
         });
+
+        this.state = {
+            object_count : 1
+        };
+
         this.onMinusPlusPressed = this.onMinusPlusPressed.bind(this);
+
     }
 
     onMinusPlusPressed (is_plus){
-        if (this.state.guest_count === 0 && is_plus === false) {return}
-        else if (this.state.guest_count === 10 && is_plus === true) {return}
+        if (this.state.object_count === this.props.count_min && is_plus === false) {return}
+        else if (this.state.object_count === this.props.count_max && is_plus === true) {return}
 
         this.setState({
-            guest_count : is_plus ? this.state.guest_count + 1 : this.state.guest_count - 1
+            object_count : is_plus ? this.state.object_count + 1 : this.state.object_count - 1
         })
     }
 
     render(){
-        return(
-            <View>
-                <Text style={common_styles.header_text}>
-                    چند نفرید؟
-                </Text>
-                <View style={this.style.sub_contianer}>
-                    <View style={this.style.minus_plus_container}>
+        return (
+            <View style={this.style.sub_container}>
+            <View style={this.style.minus_plus_container}>
 
-                        <TouchableNativeFeedback
-                            onPress={() => this.onMinusPlusPressed(false)}
-                            background={TouchableNativeFeedback.SelectableBackground()}
-                        >
-                            <View
-                                style={this.style.minus_plus}
-                            >
-                                <Text
-                                    style = {this.style.minus_plus_text}
-                                >-</Text>
-                            </View>
-                        </TouchableNativeFeedback>
-
-                        <View style={[this.style.minus_plus , {width : 30} ]}>
-                            <Text style={this.style.minus_plus_text} >
-                                {this.state.guest_count}
-                            </Text>
-                        </View>
-
-                        <TouchableNativeFeedback
-                            onPress={() => this.onMinusPlusPressed(true)}
-                            background={TouchableNativeFeedback.SelectableBackground()}
-                            style={this.style.minus_plus}
-                        >
-                            <View
-                                style={this.style.minus_plus}
-                            >
-                                <Text
-                                    style = {this.style.minus_plus_text}
-                                >+</Text>
-                            </View>
-                        </TouchableNativeFeedback>
-
+                <TouchableNativeFeedback
+                    onPress={() => this.onMinusPlusPressed(false)}
+                    background={TouchableNativeFeedback.SelectableBackground()}
+                >
+                    <View
+                        style={this.style.minus_plus}
+                    >
+                        <Text
+                            style = {this.style.minus_plus_text}
+                        >-</Text>
                     </View>
-                    <Text style={this.style.text}>
-                        حداکثر تعداد پذیرش
+                </TouchableNativeFeedback>
+
+                <View style={[this.style.minus_plus , {width : 30} ]}>
+                    <Text style={this.style.minus_plus_text} >
+                        {this.state.object_count}
                     </Text>
                 </View>
-            </View>
-        )
-    }
 
+                <TouchableNativeFeedback
+                    onPress={() => this.onMinusPlusPressed(true)}
+                    background={TouchableNativeFeedback.SelectableBackground()}
+                    style={this.style.minus_plus}
+                >
+                    <View
+                        style={this.style.minus_plus}
+                    >
+                        <Text
+                            style = {this.style.minus_plus_text}
+                        >+</Text>
+                    </View>
+                </TouchableNativeFeedback>
+
+            </View>
+            <Text style={this.style.text}>
+                {this.props.text}
+            </Text>
+        </View>
+        );
+    }
 }
