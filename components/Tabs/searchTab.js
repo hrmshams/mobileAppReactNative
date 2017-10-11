@@ -83,6 +83,8 @@ export default class Tab2 extends Component{
                     <Seprator />
                     <GuestCount />
                     <Seprator/>
+                    <HomeDetails/>
+                    <Seprator/>
                 </ScrollView>
 
                 <TouchableHighlight
@@ -337,8 +339,34 @@ class GuestCount extends Component{
             </View>
         )
     }
-
 }
+
+//
+//
+//
+class HomeDetails extends Component{
+
+    constructor(props){
+        super(props);
+
+    }
+
+    render(){
+        return(
+            <View>
+                <Text style={common_styles.header_text}>
+                    جزئیات خانه
+                </Text>
+                <SubjectCounter
+                    text="حداقل تعداد اتاق"
+                    count_min={1}
+                    count_max={6}
+                />
+            </View>
+        )
+    }
+}
+
 
 
 //
