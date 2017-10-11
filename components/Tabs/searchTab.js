@@ -8,6 +8,7 @@ import {
     TextInput,
     Picker,
     TouchableNativeFeedback,
+    TouchableHighlight,
 } from 'react-native';
 
 import {Seprator} from './../CommonComponents';
@@ -18,7 +19,36 @@ export default class Tab2 extends Component{
     {
         super(props);
 
-        this.searchComponent = new SearchHeader();
+        this.style = {
+            float_button : {
+                backgroundColor : '#f93251',
+                width : 110 ,
+                height : 50,
+                position : 'absolute',
+                bottom : 15,
+                borderRadius : 7,
+                flexDirection : 'row',
+                justifyContent : 'center',
+                alignItems : 'center',
+            },
+            // fb_container : {
+            //     flex : 1,
+            //     flexDirection : 'row',
+            //     justifyContent : 'flex-start',
+            //     alignItems : 'center',
+            // },
+            fb_text : {
+                color : 'white',
+                fontSize : 22,
+                fontFamily: "IRANYekanMobileBold",
+            },
+            // image_style : {
+            //     image : 'white',
+            //     width : 40,
+            //     height : 40,
+            //     margin : 3,
+            // }
+        }
     }
 
     //
@@ -43,16 +73,25 @@ export default class Tab2 extends Component{
     //
     render(){
         return(
-            <ScrollView style={common_styles.container} contentContainerStyle={common_styles.contentContainer}>
-                <SearchHeader />
-                <Seprator />
-                <CitySearch />
-                <Seprator />
-                <PriceRange />
-                <Seprator />
-                <GuestCount />
-                <Seprator/>
-            </ScrollView>
+            <View  style={common_styles.container}>
+                <ScrollView contentContainerStyle={common_styles.contentContainer}>
+                    <SearchHeader />
+                    <Seprator />
+                    <CitySearch />
+                    <Seprator />
+                    <PriceRange />
+                    <Seprator />
+                    <GuestCount />
+                    <Seprator/>
+                </ScrollView>
+
+                <TouchableHighlight
+                    style={this.style.float_button}
+                    onPress = {()=>{}}
+                >
+                    <Text style={this.style.fb_text}>جستجو</Text>
+                </TouchableHighlight>
+            </View>
         );
     }
 }
@@ -65,8 +104,12 @@ const common_styles = StyleSheet.create({
         container : {
             backgroundColor : '#fafafa',
             flex : 1,
+            flexDirection : 'row',
+            justifyContent : 'center',
+            alignItems : 'flex-start',
         },
         contentContainer : {
+            // backgroundColor : 'gray',
             flexDirection : 'column',
             justifyContent : 'flex-start',
             alignItems : 'stretch',
