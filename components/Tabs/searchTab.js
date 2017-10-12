@@ -84,7 +84,24 @@ export default class Tab2 extends Component {
                     <Seprator/>
                     {/*<HomeDetails/>*/}
                     {/*<Seprator/>*/}
-                    <SubjectsPicker />
+                    <SubjectsPicker
+                        pickers={
+                            [
+                                {
+                                    text : 'ok',
+                                    onPress : ()=>{alert('ok')},
+                                },
+                                {
+                                    text : 'yes',
+                                    onPress : ()=>{alert('yes')},
+                                },
+                                {
+                                    text : 'no',
+                                    onPress : ()=>{alert('no')},
+                                },
+                            ]
+                        }
+                    />
                 </ScrollView>
 
                 <TouchableHighlight
@@ -370,21 +387,30 @@ class HomeDetails extends Component {
 
 //
 //
-//
+// props example:
+// { pickers : [ {key : 1 , text : 'ok'} , {key : 2 , text : 'yes'} , {key : 3 , text : 'no'} ]
 //
 class SubjectsPicker extends Component {
     constructor(props) {
         super(props);
 
+        this.pickers_count = this.props.pickers.length;
+
+        let pickers_state = [];
+        for (let i=0 ; i<this.pickers_count ; i++){
+            pickers_state.push(0);
+        }
+        pickers_state[0] = 1;
+
         this.state = {
-            pickers_state: [1, 0, 0]
+            pickers_state: pickers_state
         };
 
         this.pickers_colors = ['#f0f0f0', '#1c9f63'];
 
         this.style = StyleSheet.create(
             {
-                pickers_container: {
+                main_container: {
                     flex: 1,
                     flexDirection: 'row',
                     justifyContent: 'flex-start',
@@ -392,17 +418,44 @@ class SubjectsPicker extends Component {
                     height: 50,
                     backgroundColor: 'red',
                 },
+                picker_container : {
+                    margin : 5,
+                    marginLeft : 20,
+                    flexDirection: 'row',
+                    justifyContent: 'flex-end',
+                    alignItems: 'center',
+                },
                 picker : {
                     padding: 1,
-                    margin: 5,
-                    width: 40,
+                    width: 50,
                     height: 30,
+                    justifyContent : 'center',
+                    alignItems : 'center',
+                } ,
+                text_container : {
+                    flex : 1,
+                    flexDirection : 'row',
+                    justifyContent : 'flex-end',
+                    alignItems : 'center',
+                    marginRight : 25,
                 }
             }
         );
 
         this.picker_background = this.picker_background.bind(this);
         this.picker_on_press = this.picker_on_press.bind(this);
+        this.picker_component_creator = this.picker_component_creator.bind(this);
+    }
+
+    picker_component_creator(picker_text, picker_key , onPress){
+        return(
+            <TouchableHighlight style={[this.style.picker , this.picker_background(picker_key)]}
+                                onPress={ ()=>{this.picker_on_press(picker_key , onPress)}}
+                                key={picker_key}
+            >
+                <Text>{picker_text}</Text>
+            </TouchableHighlight>
+        );
     }
 
     picker_background(picker_code) {
@@ -411,34 +464,34 @@ class SubjectsPicker extends Component {
         };
     }
 
-    picker_on_press(picker_code) {
-        let pickers_state = [0,0,0];
+    picker_on_press(picker_code , callback) {
+
+        let pickers_state = [];
+        for (let i=0 ; i<this.pickers_count ; i++)
+            pickers_state.push(0);
         pickers_state[picker_code] = 1;
+
         this.setState(
             {
                 pickers_state: pickers_state
             }
-        )
+        );
+
+        callback();
     }
 
     render() {
+        const pickers = this.props.pickers.
+        map( (picker , index) => this.picker_component_creator(picker.text , index , picker.onPress) );
+
         return (
-            <View style={this.style.pickers_container}>
-                <TouchableHighlight style={[this.style.picker , this.picker_background(0)]}
-                    onPress={ ()=>{this.picker_on_press(0)}}
-                >
-                    <Text>asd</Text>
-                </TouchableHighlight>
-                <TouchableHighlight style={[this.style.picker , this.picker_background(1)]}
-                    onPress={ ()=>{this.picker_on_press(1)}}
-                >
-                    <Text>asd</Text>
-                </TouchableHighlight>
-                <TouchableHighlight style={[this.style.picker , this.picker_background(2)]}
-                    onPress={ ()=>{this.picker_on_press(2)}}
-                >
-                    <Text>asd</Text>
-                </TouchableHighlight>
+            <View style={this.style.main_container}>
+                <View style={this.style.picker_container}>
+                    {pickers}
+                </View>
+                <View style={this.style.text_container}>
+                    <Text>تعداد</Text>
+                </View>
             </View>
         );
     }
