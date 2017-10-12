@@ -87,6 +87,9 @@ export default class Tab2 extends Component {
                     <Seprator />
                     <HomeFeatures />
                     <Seprator />
+                    <HomePermissions />
+                    <Seprator />
+                    <EmptyComponent />
                 </ScrollView>
 
                 <TouchableHighlight
@@ -417,6 +420,58 @@ class HomeFeatures extends Component {
                 />
             </View>
 
+        );
+    }
+}
+
+class HomePermissions extends Component {
+    constructor(props){
+        super(props);
+
+        this.picker_options = [
+            {
+                text : 'مهم نیست',
+                onPress : ()=>{alert('ok')},
+            },
+            {
+                text : 'اجازه دارد',
+                onPress : ()=>{alert('yes')},
+            },
+            {
+                text : 'اجازه ندارد',
+                onPress : ()=>{alert('no')},
+            }
+        ];
+    }
+
+    render(){
+        return(
+            <View>
+                <Text style={common_styles.header_text}>
+                    اجازه
+                </Text>
+                <SubjectsPicker
+                    text = "سیگار"
+                    pickers={this.picker_options}
+                />
+                <SubjectsPicker
+                    text = "حیوانات خانگی"
+                    pickers={this.picker_options}
+                />
+            </View>
+        )
+    }
+
+}
+
+class EmptyComponent extends Component{
+    render(){
+        return (
+            <View
+                style = {{
+                    height : 70,
+                }}
+            />
         );
     }
 }
