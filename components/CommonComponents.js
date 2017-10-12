@@ -3,7 +3,8 @@ import {
     StyleSheet,
     View ,
     Text,
-    TouchableHighlight
+    TouchableHighlight,
+    TouchableNativeFeedback
 } from 'react-native';
 
 import PropTypes from 'prop-types';
@@ -89,6 +90,7 @@ export class SubjectsPicker extends Component {
         };
 
         this.pickers_colors = ['#f0f0f0', '#1c9f63'];
+        this.text_colors = ['#000000', 'white'];
 
         this.style = StyleSheet.create(
             {
@@ -97,8 +99,8 @@ export class SubjectsPicker extends Component {
                     flexDirection: 'row',
                     justifyContent: 'flex-start',
                     alignItems: 'center',
-                    height: 50,
-                    backgroundColor: 'red',
+                    height: 45,
+                    // backgroundColor: 'red',
                 },
                 picker_container : {
                     margin : 5,
@@ -109,18 +111,27 @@ export class SubjectsPicker extends Component {
                 },
                 picker : {
                     padding: 1,
-                    width: 50,
+                    width: 75,
                     height: 30,
                     justifyContent : 'center',
                     alignItems : 'center',
                 } ,
                 text_container : {
                     flex : 1,
-                    flexDirection : 'row',
-                    justifyContent : 'flex-end',
-                    alignItems : 'center',
-                    marginRight : 25,
+                    flexDirection : 'column',
+                    justifyContent : 'center',
+                    alignItems : 'flex-end',
+                    marginRight : 30,
+                },
+                text: {
+                    fontFamily: "IRANYekanMobileRegular",
+                    fontSize: 18,
+                },
+                picker_text : {
+                    fontFamily: "IRANYekanMobileRegular",
+                    fontSize: 14,
                 }
+
             }
         );
 
@@ -135,7 +146,9 @@ export class SubjectsPicker extends Component {
                                 onPress={ ()=>{this.picker_on_press(picker_key , onPress)}}
                                 key={picker_key}
             >
-                <Text>{picker_text}</Text>
+                <Text style={[this.style.picker_text , this.picker_text_color(picker_key)]}>
+                    {picker_text}
+                </Text>
             </TouchableHighlight>
         );
     }
@@ -143,6 +156,12 @@ export class SubjectsPicker extends Component {
     picker_background(picker_code) {
         return {
             backgroundColor: this.pickers_colors[this.state.pickers_state[picker_code]],
+        };
+    }
+
+    picker_text_color(picker_code){
+        return {
+            color : this.text_colors[this.state.pickers_state[picker_code]],
         };
     }
 
@@ -172,8 +191,123 @@ export class SubjectsPicker extends Component {
                     {pickers}
                 </View>
                 <View style={this.style.text_container}>
-                    <Text>تعداد</Text>
+                    <Text style={this.style.text}>{this.props.text}</Text>
                 </View>
+            </View>
+        );
+    }
+}
+
+
+
+//
+// this is a component that used for in some section!
+// show the count of object that user must determine that!
+//
+
+export class SubjectCounter extends Component {
+
+    constructor(props) {
+        super(props);
+
+        this.style = StyleSheet.create({
+            text: {
+                fontFamily: "IRANYekanMobileRegular",
+                fontSize: 18,
+                marginRight: 30,
+            },
+            sub_container: {
+                flex: 1,
+                flexDirection: 'row',
+                justifyContent: 'flex-end',
+                marginBottom: 15,
+            },
+            minus_plus_container: {
+                flex: 1,
+                flexDirection: 'row',
+                justifyContent: 'flex-start',
+                marginLeft: 25,
+            },
+            minus_plus: {
+                marginLeft: 3,
+                marginRight: 3,
+                width: 30,
+                height: 30,
+                // backgroundColor : 'blue',
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderRadius: 15,
+            },
+            minus_plus_text: {
+                fontSize: 25,
+            },
+
+        });
+
+        this.state = {
+            object_count: 1
+        };
+
+        this.onMinusPlusPressed = this.onMinusPlusPressed.bind(this);
+
+    }
+
+    onMinusPlusPressed(is_plus) {
+        if (this.state.object_count === this.props.count_min && is_plus === false) {
+            return
+        }
+        else if (this.state.object_count === this.props.count_max && is_plus === true) {
+            return
+        }
+
+        this.setState({
+            object_count: is_plus ? this.state.object_count + 1 : this.state.object_count - 1
+        })
+    }
+
+    render() {
+        return (
+            <View style={this.style.sub_container}>
+                <View style={this.style.minus_plus_container}>
+
+                    <TouchableNativeFeedback
+                        onPress={() => this.onMinusPlusPressed(false)}
+                        background={TouchableNativeFeedback.SelectableBackground()}
+                    >
+                        <View
+                            style={this.style.minus_plus}
+                        >
+                            <Text
+                                style={this.style.minus_plus_text}
+                            >-</Text>
+                        </View>
+                    </TouchableNativeFeedback>
+
+                    <View style={[this.style.minus_plus , {width : 30} ]}>
+                        <Text style={this.style.minus_plus_text}>
+                            {this.state.object_count}
+                        </Text>
+                    </View>
+
+                    <TouchableNativeFeedback
+                        onPress={() => this.onMinusPlusPressed(true)}
+                        background={TouchableNativeFeedback.SelectableBackground()}
+                        style={this.style.minus_plus}
+                    >
+                        <View
+                            style={this.style.minus_plus}
+                        >
+                            <Text
+                                style={this.style.minus_plus_text}
+                            >+</Text>
+                        </View>
+                    </TouchableNativeFeedback>
+
+                </View>
+                <Text style={this.style.text}>
+                    {this.props.text}
+                </Text>
             </View>
         );
     }

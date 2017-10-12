@@ -11,8 +11,7 @@ import {
     TouchableHighlight,
 } from 'react-native';
 
-import {SubjectsPicker} from './../CommonComponents';
-import {Seprator} from './../CommonComponents';
+import {SubjectsPicker , Seprator , SubjectCounter} from './../CommonComponents';
 
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
 
@@ -83,27 +82,11 @@ export default class Tab2 extends Component {
                     <PriceRange />
                     <Seprator />
                     <GuestCount />
-                    <Seprator/>
-                    {/*<HomeDetails/>*/}
-                    {/*<Seprator/>*/}
-                    <SubjectsPicker
-                        pickers={
-                            [
-                                {
-                                    text : 'ok',
-                                    onPress : ()=>{alert('ok')},
-                                },
-                                {
-                                    text : 'yes',
-                                    onPress : ()=>{alert('yes')},
-                                },
-                                {
-                                    text : 'no',
-                                    onPress : ()=>{alert('no')},
-                                },
-                            ]
-                        }
-                    />
+                    <Seprator />
+                    <HomeDetails />
+                    <Seprator />
+                    <HomeFeatures />
+                    <Seprator />
                 </ScrollView>
 
                 <TouchableHighlight
@@ -386,116 +369,54 @@ class HomeDetails extends Component {
     }
 }
 
-
 //
-// this is a component that used for in some section!
-// show the count of object that user must determine that!
 //
-
-class SubjectCounter extends Component {
-
-    constructor(props) {
+//
+class HomeFeatures extends Component {
+    constructor(props){
         super(props);
 
-        this.style = StyleSheet.create({
-            text: {
-                fontFamily: "IRANYekanMobileRegular",
-                fontSize: 18,
-                marginRight: 30,
+        this.picker_options = [
+            {
+                text : 'مهم نیست',
+                onPress : ()=>{alert('ok')},
             },
-            sub_container: {
-                flex: 1,
-                flexDirection: 'row',
-                justifyContent: 'flex-end',
-                marginBottom: 15,
+            {
+                text : 'دارد',
+                onPress : ()=>{alert('yes')},
             },
-            minus_plus_container: {
-                flex: 1,
-                flexDirection: 'row',
-                justifyContent: 'flex-start',
-                marginLeft: 25,
-            },
-            minus_plus: {
-                marginLeft: 3,
-                marginRight: 3,
-                width: 30,
-                height: 30,
-                // backgroundColor : 'blue',
-                flexDirection: 'row',
-                justifyContent: 'center',
-                alignItems: 'center',
-                borderRadius: 15,
-            },
-            minus_plus_text: {
-                fontSize: 25,
-            },
-
-        });
-
-        this.state = {
-            object_count: 1
-        };
-
-        this.onMinusPlusPressed = this.onMinusPlusPressed.bind(this);
-
+            {
+                text : 'ندارد',
+                onPress : ()=>{alert('no')},
+            }
+        ];
     }
 
-    onMinusPlusPressed(is_plus) {
-        if (this.state.object_count === this.props.count_min && is_plus === false) {
-            return
-        }
-        else if (this.state.object_count === this.props.count_max && is_plus === true) {
-            return
-        }
+    render(){
 
-        this.setState({
-            object_count: is_plus ? this.state.object_count + 1 : this.state.object_count - 1
-        })
-    }
-
-    render() {
-        return (
-            <View style={this.style.sub_container}>
-                <View style={this.style.minus_plus_container}>
-
-                    <TouchableNativeFeedback
-                        onPress={() => this.onMinusPlusPressed(false)}
-                        background={TouchableNativeFeedback.SelectableBackground()}
-                    >
-                        <View
-                            style={this.style.minus_plus}
-                        >
-                            <Text
-                                style={this.style.minus_plus_text}
-                            >-</Text>
-                        </View>
-                    </TouchableNativeFeedback>
-
-                    <View style={[this.style.minus_plus , {width : 30} ]}>
-                        <Text style={this.style.minus_plus_text}>
-                            {this.state.object_count}
-                        </Text>
-                    </View>
-
-                    <TouchableNativeFeedback
-                        onPress={() => this.onMinusPlusPressed(true)}
-                        background={TouchableNativeFeedback.SelectableBackground()}
-                        style={this.style.minus_plus}
-                    >
-                        <View
-                            style={this.style.minus_plus}
-                        >
-                            <Text
-                                style={this.style.minus_plus_text}
-                            >+</Text>
-                        </View>
-                    </TouchableNativeFeedback>
-
-                </View>
-                <Text style={this.style.text}>
-                    {this.props.text}
+        return(
+            <View>
+                <Text style={common_styles.header_text}>
+                    امکانات خانه
                 </Text>
+                <SubjectsPicker
+                    text = "تلویزیون"
+                    pickers={this.picker_options}
+                />
+                <SubjectsPicker
+                    text = "آشپزخانه"
+                    pickers={this.picker_options}
+                />
+                <SubjectsPicker
+                    text = "وای فای"
+                    pickers={this.picker_options}
+                />
+                <SubjectsPicker
+                    text = "نمای زیبا"
+                    pickers={this.picker_options}
+                />
             </View>
+
         );
     }
 }
