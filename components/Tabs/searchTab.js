@@ -41,7 +41,7 @@ export default class Tab2 extends Component {
         this.seeMoreDisabledCompoennt = [
             <SeeMore
                 key={0}
-                onPressCallback={this.seeMorePressed}
+                onPressCallback={this.seeMorePressed.bind(this)}
             /> ,
             <EmptyComponent key={1}/>
         ];
@@ -53,7 +53,8 @@ export default class Tab2 extends Component {
             <Seprator key={3}/> ,
             <SeeMore
                 key={4}
-                onPressCallback={this.seeMorePressed}
+                onPressCallback={this.seeMorePressed.bind(this)}
+                objectRef={this}
             /> ,
             <EmptyComponent key={5}/>
         ];
@@ -63,9 +64,11 @@ export default class Tab2 extends Component {
         };
 
         this.seeMorePressed = this.seeMorePressed.bind(this);
+        this.text = "asd";
     }
 
     seeMorePressed(isShowMoreRequested){
+        // alert('from parent');
         this.setState({
             see_more_section : isShowMoreRequested ? this.seeMoreEnabledCompoennt : this.seeMoreDisabledCompoennt
         });
@@ -392,13 +395,20 @@ class SeeMore extends Component {
         this.seeMoreOnPress = this.seeMoreOnPress.bind(this);
     }
 
-    seeMoreOnPress(){
-        this.props.onPressCallback(this.state.is_more_details_requested);
-
+    sets = (callback) => {
         this.setState({
             is_more_details_requested: !this.state.is_more_details_requested ,
             index : (this.state.index + 1) % 2
-        });
+        }  ,  () => {alert('asd');});
+
+        callback(this.state.is_more_details_requested)
+    };
+
+    seeMoreOnPress(){
+        let rec = this.state.is_more_details_requested;
+
+        this.sets(this.props.onPressCallback);
+        ;
     }
 
     render(){
@@ -415,7 +425,7 @@ class SeeMore extends Component {
                         <Text
                             style={this.style.text}
                         >
-                            {this.text[this.state.index]}
+                            {this.state.index}
                         </Text>
                     </TouchableNativeFeedback>
                 </View>
