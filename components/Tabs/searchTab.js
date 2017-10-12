@@ -31,24 +31,44 @@ export default class Tab2 extends Component {
                 justifyContent: 'center',
                 alignItems: 'center',
             },
-            // fb_container : {
-            //     flex : 1,
-            //     flexDirection : 'row',
-            //     justifyContent : 'flex-start',
-            //     alignItems : 'center',
-            // },
             fb_text: {
                 color: 'white',
                 fontSize: 22,
                 fontFamily: "IRANYekanMobileBold",
             },
-            // image_style : {
-            //     image : 'white',
-            //     width : 40,
-            //     height : 40,
-            //     margin : 3,
-            // }
-        }
+        };
+
+        this.seeMoreDisabledCompoennt = [
+            <SeeMore
+                key={0}
+                onPressCallback={this.seeMorePressed}
+            /> ,
+            <EmptyComponent key={1}/>
+        ];
+
+        this.seeMoreEnabledCompoennt = [
+            <HomeFeatures key={0}/> ,
+            <Seprator key={1}/> ,
+            <HomePermissions key={2}/> ,
+            <Seprator key={3}/> ,
+            <SeeMore
+                key={4}
+                onPressCallback={this.seeMorePressed}
+            /> ,
+            <EmptyComponent key={5}/>
+        ];
+
+        this.state = {
+            see_more_section : this.seeMoreDisabledCompoennt
+        };
+
+        this.seeMorePressed = this.seeMorePressed.bind(this);
+    }
+
+    seeMorePressed(isShowMoreRequested){
+        this.setState({
+            see_more_section : isShowMoreRequested ? this.seeMoreEnabledCompoennt : this.seeMoreDisabledCompoennt
+        });
     }
 
     //
@@ -59,9 +79,6 @@ export default class Tab2 extends Component {
 
         headerTitleStyle: {
             color: 'white',
-            // alignSelf: 'flex-end',
-            // fontWeight: "200",
-            // margin:5
         },
         headerStyle: {
             backgroundColor: '#15172c', height: 60
@@ -85,11 +102,7 @@ export default class Tab2 extends Component {
                     <Seprator />
                     <HomeDetails />
                     <Seprator />
-                    <HomeFeatures />
-                    <Seprator />
-                    <HomePermissions />
-                    <Seprator />
-                    <EmptyComponent />
+                    {this.state.see_more_section}
                 </ScrollView>
 
                 <TouchableHighlight
@@ -344,6 +357,72 @@ class GuestCount extends Component {
             </View>
         )
     }
+}
+
+class SeeMore extends Component {
+    constructor(props){
+        super(props);
+
+        this.style = StyleSheet.create({
+            container : {
+                flex : 1,
+                flexDirection : 'row',
+                justifyContent : 'flex-start',
+                alignItems : 'center',
+            },
+            text : {
+                fontSize: 17,
+                fontFamily: "IRANYekanMobileBold",
+            },
+            text_container : {
+                marginLeft : 30,
+            },
+        });
+
+        this.text = [
+            "جزئیات بیشتر" ,
+            "جزئیات کمتر"
+        ];
+
+        this.state = {
+            is_more_details_requested : true,
+            index : 0
+        };
+
+        this.seeMoreOnPress = this.seeMoreOnPress.bind(this);
+    }
+
+    seeMoreOnPress(){
+        this.props.onPressCallback(this.state.is_more_details_requested);
+
+        this.setState({
+            is_more_details_requested: !this.state.is_more_details_requested ,
+            index : (this.state.index + 1) % 2
+        });
+    }
+
+    render(){
+        return(
+            <View
+                style={this.style.container}
+            >
+                <View
+                    style={this.style.text_container}
+                >
+                    <TouchableNativeFeedback
+                        onPress={this.seeMoreOnPress}
+                    >
+                        <Text
+                            style={this.style.text}
+                        >
+                            {this.text[this.state.index]}
+                        </Text>
+                    </TouchableNativeFeedback>
+                </View>
+            </View>
+        )
+    }
+
 }
 
 //
