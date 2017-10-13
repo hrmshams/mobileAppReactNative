@@ -22,7 +22,7 @@ export default class Tab2 extends Component {
         this.style = {
             float_button: {
                 backgroundColor: '#f93251',
-                width: 110,
+                width: 135,
                 height: 50,
                 position: 'absolute',
                 bottom: 15,
@@ -33,9 +33,22 @@ export default class Tab2 extends Component {
             },
             fb_text: {
                 color: 'white',
-                fontSize: 22,
+                fontSize: 24,
                 fontFamily: "IRANYekanMobileBold",
+                alignItems : 'center',
+                justifyContent : 'center',
             },
+            image:{
+                width : 25,
+                height : 25,
+                margin : 5,
+            },
+            button_container : {
+                flex : 1,
+                flexDirection : 'row',
+                justifyContent : 'center',
+                alignItems : 'center',
+            }
         };
 
         this.seeMoreDisabledCompoennt = [
@@ -105,7 +118,13 @@ export default class Tab2 extends Component {
                     style={this.style.float_button}
                     onPress={()=>{}}
                 >
-                    <Text style={this.style.fb_text}>جستجو</Text>
+                    <View style={this.style.button_container}>
+                        <Image
+                            source={require('./../../assets/search.png')}
+                            style={this.style.image}
+                        />
+                        <Text style={this.style.fb_text}>جستجو |</Text>
+                    </View>
                 </TouchableHighlight>
             </View>
         );
