@@ -275,8 +275,11 @@ class PriceRange extends Component {
     constructor(props) {
         super(props);
 
+        this.minValue = 50;
+        this.maxValue = 500;
+
         this.state = {
-            slider_values: [100, 150]
+            slider_values: [this.minValue, this.maxValue]
         };
 
         this.style = StyleSheet.create({
@@ -327,12 +330,13 @@ class PriceRange extends Component {
                 >
                     <View style={{height : 20}}>
                         <MultiSlider
-                            min={50}
-                            max={500}
+                            min={this.minValue}
+                            max={this.maxValue}
                             step={10}
                             values={this.state.slider_values}
                             sliderLength={300}
-                            onValuesChange={(values) => this.sliderOneValuesChangeStart(values)}
+                            onValuesChange={()=>{}}
+                            onValuesChangeFinish={(values) => this.sliderOneValuesChangeStart(values)}
                         />
                     </View>
                 </View>
