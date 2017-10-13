@@ -39,24 +39,15 @@ export default class Tab2 extends Component {
         };
 
         this.seeMoreDisabledCompoennt = [
-            <SeeMore
-                key={0}
-                onPressCallback={this.seeMorePressed.bind(this)}
-            /> ,
-            <EmptyComponent key={1}/>
         ];
 
         this.seeMoreEnabledCompoennt = [
-            <HomeFeatures key={0}/> ,
-            <Seprator key={1}/> ,
-            <HomePermissions key={2}/> ,
+            <HomeDetails key={0}/>,
+            <Seprator key={1}/>,
+            <HomeFeatures key={2}/> ,
             <Seprator key={3}/> ,
-            <SeeMore
-                key={4}
-                onPressCallback={this.seeMorePressed.bind(this)}
-                objectRef={this}
-            /> ,
-            <EmptyComponent key={5}/>
+            <HomePermissions key={4}/> ,
+            <Seprator key={5}/> ,
         ];
 
         this.state = {
@@ -70,7 +61,7 @@ export default class Tab2 extends Component {
     seeMorePressed(isShowMoreRequested){
         // alert('from parent');
         this.setState({
-            see_more_section : isShowMoreRequested ? this.seeMoreEnabledCompoennt : this.seeMoreDisabledCompoennt
+            see_more_section : isShowMoreRequested === 0 ? this.seeMoreEnabledCompoennt : this.seeMoreDisabledCompoennt
         });
     }
 
@@ -103,9 +94,11 @@ export default class Tab2 extends Component {
                     <Seprator />
                     <GuestCount />
                     <Seprator />
-                    <HomeDetails />
-                    <Seprator />
                     {this.state.see_more_section}
+                    <SeeMore
+                        onPressCallback={this.seeMorePressed.bind(this)}
+                    />
+                    <EmptyComponent/>
                 </ScrollView>
 
                 <TouchableHighlight
@@ -387,28 +380,15 @@ class SeeMore extends Component {
             "جزئیات کمتر"
         ];
 
-        this.state = {
-            is_more_details_requested : true,
-            index : 0
-        };
+        this.index = 0;
+        // alert(this.index);
 
         this.seeMoreOnPress = this.seeMoreOnPress.bind(this);
     }
 
-    sets = (callback) => {
-        this.setState({
-            is_more_details_requested: !this.state.is_more_details_requested ,
-            index : (this.state.index + 1) % 2
-        }  ,  () => {alert('asd');});
-
-        callback(this.state.is_more_details_requested)
-    };
-
     seeMoreOnPress(){
-        let rec = this.state.is_more_details_requested;
-
-        this.sets(this.props.onPressCallback);
-        ;
+        this.props.onPressCallback(this.index);
+        this.index = (this.index + 1) % 2;
     }
 
     render(){
@@ -425,7 +405,7 @@ class SeeMore extends Component {
                         <Text
                             style={this.style.text}
                         >
-                            {this.state.index}
+                            {this.text[this.index]}
                         </Text>
                     </TouchableNativeFeedback>
                 </View>
