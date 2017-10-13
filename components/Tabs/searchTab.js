@@ -22,8 +22,8 @@ export default class Tab2 extends Component {
         this.style = {
             float_button: {
                 backgroundColor: '#f93251',
-                width: 135,
-                height: 50,
+                width: 125,
+                height: 44,
                 position: 'absolute',
                 bottom: 15,
                 borderRadius: 7,
@@ -33,14 +33,14 @@ export default class Tab2 extends Component {
             },
             fb_text: {
                 color: 'white',
-                fontSize: 24,
+                fontSize: 22,
                 fontFamily: "IRANYekanMobileBold",
                 alignItems : 'center',
                 justifyContent : 'center',
             },
             image:{
-                width : 25,
-                height : 25,
+                width : 23,
+                height : 23,
                 margin : 5,
             },
             button_container : {
@@ -390,11 +390,12 @@ class SeeMore extends Component {
                 alignItems : 'center',
             },
             text : {
-                fontSize: 17,
+                fontSize: 16,
                 fontFamily: "IRANYekanMobileBold",
+                color : '#000000'
             },
             text_container : {
-                marginLeft : 30,
+                marginLeft : 20,
             },
         });
 
@@ -419,19 +420,20 @@ class SeeMore extends Component {
             <View
                 style={this.style.container}
             >
-                <View
-                    style={this.style.text_container}
-                >
                     <TouchableNativeFeedback
                         onPress={this.seeMoreOnPress}
+                        background={TouchableNativeFeedback.SelectableBackground()}
                     >
-                        <Text
-                            style={this.style.text}
+                        <View
+                            style={this.style.text_container}
                         >
-                            {this.text[this.index]}
-                        </Text>
+                            <Text
+                                style={this.style.text}
+                            >
+                                {this.text[this.index]}
+                            </Text>
+                        </View>
                     </TouchableNativeFeedback>
-                </View>
             </View>
         )
     }
@@ -510,6 +512,7 @@ class HomeFeatures extends Component {
                     text = "نمای زیبا"
                     pickers={this.picker_options}
                 />
+                <View style={{height : 10}} />
             </View>
 
         );
@@ -550,6 +553,7 @@ class HomePermissions extends Component {
                     text = "حیوانات خانگی"
                     pickers={this.picker_options}
                 />
+                <View style={{height : 10}} />
             </View>
         )
     }
