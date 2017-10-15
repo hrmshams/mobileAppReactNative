@@ -2,6 +2,7 @@ import React , {Component} from 'react';
 
 import mainTab from './Tabs/firstTab';
 import searchTab from './Tabs/searchTab';
+import searchResults from './Tabs/searchResults';
 
 import {TabNavigator}
 from 'react-navigation';
@@ -10,6 +11,7 @@ from 'react-navigation';
 const route_config = {
     first_tab: {screen: mainTab},
     search_tab: {screen: searchTab},
+    searchResults : {screen : searchResults},
 };
 
 const properties = {
